@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  mlops-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: self_monitoring_mlops_app
+    ports:
+      - "8000:8000"
+    environment:
+      - APP_NAME=Self-Monitoring MLOps System
+      - APP_VERSION=1.0.0
+      - ENVIRONMENT=production
+      - ADMIN_API_KEY=admin-secret-key-prod-demo
+      - ML_ENGINEER_API_KEY=engineer-secret-key-prod-demo
+      - VIEWER_API_KEY=viewer-secret-key-prod-demo
+      - SERVICE_API_KEY=service-secret-key-prod-demo
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
