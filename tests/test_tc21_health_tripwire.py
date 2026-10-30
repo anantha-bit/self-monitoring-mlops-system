@@ -32,3 +32,4 @@ def test_tc21_health_tripwire():
     h_rec, _ = tripwire.check_telemetry(error_rate=0.02, p95_latency=40.0)
     assert h_rec is True
     assert tripwire.consecutive_failures == 0
+

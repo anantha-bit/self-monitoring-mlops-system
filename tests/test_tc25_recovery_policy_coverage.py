@@ -33,3 +33,4 @@ def test_tc25_recovery_policy_and_app_endpoints():
     res_dash = client.get("/dashboard")
     assert res_dash.status_code == 200
     assert "Self-Monitoring MLOps Dashboard" in res_dash.text
+

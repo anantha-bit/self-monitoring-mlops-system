@@ -48,3 +48,4 @@ def test_tc23_e2e_recovery_workflow():
     assert dec_res.status_code == 200
     assert dec_res.json()["status"] == "PROMOTED"
     assert model_registry.active_version == cand_id
+

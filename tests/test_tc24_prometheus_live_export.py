@@ -17,3 +17,4 @@ def test_tc24_prometheus_live_export():
     assert "mlops_prediction_errors_total" in text
     assert "mlops_prediction_latency_p95_milliseconds" in text
     assert "mlops_error_rate" in text
+

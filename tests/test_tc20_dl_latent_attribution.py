@@ -19,3 +19,4 @@ def test_tc20_dl_latent_attribution():
     for i in range(6):
         assert f"feat_{i}" in errors
         assert isinstance(errors[f"feat_{i}"], float)
+

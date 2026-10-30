@@ -34,3 +34,4 @@ def test_tc22_audit_chain_verification():
     tampered_valid, tamper_msg = audit_verifier.verify_chain(tampered_events)
     assert tampered_valid is False
     assert "Integrity check failed" in tamper_msg or "Tamper detected" in tamper_msg
+
