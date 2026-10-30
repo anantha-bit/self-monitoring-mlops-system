@@ -10,3 +10,4 @@ This directory contains the verified video demonstrations for **Sprint-1** and *
 > Complete walk-through scripts, narration guides, and recording instructions are documented in [`docs/SPRINT_1_AND_2_VIDEO_DEMO_GUIDE.md`](../SPRINT_1_AND_2_VIDEO_DEMO_GUIDE.md).
 
 Sprint deliverables reviewed & verified by Akash G K (PES1UG24AM022).
+Sprint deliverables reviewed & verified by Amit Prasad S G (PES1UG24AM033).
