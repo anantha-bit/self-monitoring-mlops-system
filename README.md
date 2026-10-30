@@ -22,40 +22,74 @@ An end-to-end, production-ready MLOps monitoring and automated recovery system d
 | **AKASH G K** | **PES1UG24AM022** | [@akashgkuradagi](https://github.com/akashgkuradagi) | **Contributor**, Metrics Collection, Statistical Drift Engine, Benchmarking & Tripwire |
 | **AMIT PRASAD S G** | **PES1UG24AM033** | [@prasadamith05-png](https://github.com/prasadamith05-png) | **Contributor**, DL Sequence Autoencoder, QML Benchmark, RBAC & Audit Verifier |
 
+- **Department:** Computer Science & Engineering (Artificial Intelligence & Machine Learning)
+- **Institution:** PES University, Bengaluru
+- **Course:** Software Engineering Mini-Project
+
 ---
 
 ## 📑 Software Engineering Mini-Project Deliverables Part-3
 
 In strict accordance with the **SE Mini-Project Deliverables Part-3** instructions:
-1. **Test Cases Updation:**
-   - Expanded from 18 to **25 automated test cases** covering newly developed Sprint-3 components (statistical sensitivity sweeps, autoencoder reconstruction attribution, continuous health tripwires, and SHA-256 audit chain verification).
-   - Fully updated and executed in [**docs/04_Test_Case_Catalogue_Self_Monitoring_MLOps_System.md**](docs/04_Test_Case_Catalogue_Self_Monitoring_MLOps_System.md) and [**docs/02_Test_Plan_Self_Monitoring_MLOps_System.md**](docs/02_Test_Plan_Self_Monitoring_MLOps_System.md).
-2. **Testing (2nd Nov to 6th Nov 2026):**
-   - 100% test completion with **25/25 tests passing** in ~8.5 seconds.
-   - **86% code coverage** achieved (88.8% statement coverage, 682/768 statements).
-   - Generated and uploaded the 4 required test reports to the repository's `docs/` and `docs/reports/` directories:
-     - 📘 [**Unit Test Report** (`docs/reports/UNIT_TEST_REPORT.md`)](docs/reports/UNIT_TEST_REPORT.md) | [Direct in docs/](docs/UNIT_TEST_REPORT.md)
-     - 📗 [**System Validation Report** (`docs/reports/SYSTEM_VALIDATION_REPORT.md`)](docs/reports/SYSTEM_VALIDATION_REPORT.md) | [Direct in docs/](docs/SYSTEM_VALIDATION_REPORT.md)
-     - 📙 [**Code Coverage Report** (`docs/reports/CODE_COVERAGE_REPORT.md`)](docs/reports/CODE_COVERAGE_REPORT.md) | [Direct in docs/](docs/CODE_COVERAGE_REPORT.md)
-     - 📕 [**Branch Coverage Report** (`docs/reports/BRANCH_COVERAGE_REPORT.md`)](docs/reports/BRANCH_COVERAGE_REPORT.md) | [Direct in docs/](docs/BRANCH_COVERAGE_REPORT.md)
-     - 🌐 [Interactive HTML Coverage Explorer (`docs/reports/htmlcov/index.html`)](docs/reports/htmlcov/index.html)
-3. **Sprint-3 Parallel Activity (2nd Nov to 6th Nov 2026):**
-   - Completed parallel development of Sprint-3 features and backlog items (#13 to #19).
-   - Complete documentation in [**docs/SPRINT_3_DOCUMENTATION.md**](docs/SPRINT_3_DOCUMENTATION.md) and [**BACKLOG.md**](BACKLOG.md).
-   - Code contributions authored across all three team members and release tagged [`v1.1.0-sprint3`](https://github.com/anantha-bit/self-monitoring-mlops-system/releases/tag/v1.1.0-sprint3).
+
+### 1. Test Cases Updation
+- **Test Suite Expansion:** Expanded the automated test suite from 18 to **25 automated test cases**, adding comprehensive verification for features developed in Sprint-3:
+  - [`tests/test_tc19_drift_sensitivity_benchmark.py`](tests/test_tc19_drift_sensitivity_benchmark.py): Statistical sensitivity sweep evaluating KS-test and PSI across shift magnitudes ($0.0\sigma \to 3.0\sigma$).
+  - [`tests/test_tc20_dl_latent_attribution.py`](tests/test_tc20_dl_latent_attribution.py): PyTorch Autoencoder per-feature reconstruction error attribution for anomaly localization.
+  - [`tests/test_tc21_health_tripwire.py`](tests/test_tc21_health_tripwire.py): Continuous health tripwire monitoring consecutive telemetry spikes and triggering automated rollback.
+  - [`tests/test_tc22_audit_chain_verification.py`](tests/test_tc22_audit_chain_verification.py): Cryptographic SHA-256 audit ledger hash chain verification and tamper detection.
+  - [`tests/test_tc23_e2e_recovery_workflow.py`](tests/test_tc23_e2e_recovery_workflow.py): End-to-end autonomous model recovery, quarantine, regression check, and promotion workflow.
+  - [`tests/test_tc24_prometheus_live_export.py`](tests/test_tc24_prometheus_live_export.py): Live Prometheus scrapable text exposition format verification.
+  - [`tests/test_tc25_recovery_policy_coverage.py`](tests/test_tc25_recovery_policy_coverage.py): Dynamic recovery policy boundary evaluation and UI dashboard routes.
+- **Updated Test Case Document:** [**`docs/04_Test_Case_Catalogue_Self_Monitoring_MLOps_System.md`**](docs/04_Test_Case_Catalogue_Self_Monitoring_MLOps_System.md) updated to Version 1.1.0 with complete specifications, execution records (**all 25 Passed**), and IEEE SRS traceability.
+- **Updated Test Plan Document:** [**`docs/02_Test_Plan_Self_Monitoring_MLOps_System.md`**](docs/02_Test_Plan_Self_Monitoring_MLOps_System.md) updated with Part-3 testing scope, schedule (2nd Nov – 6th Nov 2026), updated deliverables list, and signoff.
+
+### 2. Testing Execution & Formal Test Reports
+Testing completed with **25 / 25 tests passing (100% pass rate)** in ~8.5 seconds and **86% code coverage** (88.8% statement coverage, 682 / 768 statements).
+
+All 4 required test reports have been generated and committed to both `docs/` and `docs/reports/`:
+
+| # | Required Report Name | Repository Path | Direct GitHub Link | Primary Highlights |
+| :-: | :--- | :--- | :--- | :--- |
+| **i** | **Unit Test Report** | `docs/reports/UNIT_TEST_REPORT.md` (and `docs/UNIT_TEST_REPORT.md`) | [View Unit Test Report](docs/reports/UNIT_TEST_REPORT.md) | Matrix of all 25 test cases (TC-01 to TC-25), execution timings, environment specs, pass/fail status, and defect triage. |
+| **ii** | **System Validation Report** | `docs/reports/SYSTEM_VALIDATION_REPORT.md` (and `docs/SYSTEM_VALIDATION_REPORT.md`) | [View System Validation Report](docs/reports/SYSTEM_VALIDATION_REPORT.md) | Validation of IEEE SRS requirements (14 FRs, 12 NFRs, 6 SRs), 7 end-to-end integration scenarios, entry/exit criteria sign-off. |
+| **iii** | **Code Coverage Report** | `docs/reports/CODE_COVERAGE_REPORT.md` (and `docs/CODE_COVERAGE_REPORT.md`) | [View Code Coverage Report](docs/reports/CODE_COVERAGE_REPORT.md) | File-by-file statement coverage analysis (88.8% statement coverage, 85.6% combined), interactive HTML explorer navigation. |
+| **iv** | **Branch Coverage Report** | `docs/reports/BRANCH_COVERAGE_REPORT.md` (and `docs/BRANCH_COVERAGE_REPORT.md`) | [View Branch Coverage Report](docs/reports/BRANCH_COVERAGE_REPORT.md) | Analysis of all 150 conditional decision branches via `--cov-branch`, 100% branch coverage on validation gates and tripwires. |
+
+*In addition, the machine-readable [`docs/reports/coverage.json`](docs/reports/coverage.json) and interactive visual HTML coverage directory [`docs/reports/htmlcov/`](docs/reports/htmlcov) are committed to the repository.*
+
+### 3. Parallel Sprint-3 Activity
+- **Sprint-3 Documentation:** Created [**`docs/SPRINT_3_DOCUMENTATION.md`**](docs/SPRINT_3_DOCUMENTATION.md) detailing sprint planning, user stories, velocity metrics, architecture highlights, burndown, retrospective, and Definition of Done.
+- **Backlog Traceability:** [**`BACKLOG.md`**](BACKLOG.md) expanded to include Sprint 3 items (Issues #13 to #19), bringing cumulative project velocity to **106 Story Points (100% completed)**:
+  - Sprint 1 (19th – 23rd Oct): 34 SP
+  - Sprint 2 (26th – 30th Oct): 34 SP
+  - Sprint 3 (2nd – 6th Nov): 38 SP
+- **Release Tag:** Tagged and pushed official release [**`v1.1.0-sprint3`**](https://github.com/anantha-bit/self-monitoring-mlops-system/releases/tag/v1.1.0-sprint3).
 
 ---
 
 ## 🎥 Sprint Demonstration Videos
 
-In accordance with the Software Engineering Mini-Project Deliverables, video demonstrations for each sprint have been recorded, verified, and committed to the repository:
+In accordance with the Software Engineering Mini-Project Deliverables, verified video demonstrations for each sprint have been encoded in standard **H.264 (AVC) / MP4** with `+faststart` streaming metadata, committed directly to the repository, and verified for direct browser playback:
 
-| Sprint | Deliverable Description | Duration | Repository Path | Direct GitHub Link |
+| Sprint | Deliverable Description | Target Duration | Video Path in Repo | Direct GitHub Video Link |
 | :--- | :--- | :---: | :--- | :--- |
-| **Sprint 1** | Functional MVP microservice demonstration: core prediction serving, automated telemetry metrics ingestion, two-sample KS & PSI statistical drift detection, PyTorch autoencoder, and isolated QML simulator benchmark. | ~1 min | [docs/evidence/videos/sprint1.mp4](docs/evidence/videos/sprint1.mp4) | [View sprint1.mp4 on GitHub](https://github.com/anantha-bit/self-monitoring-mlops-system/blob/main/docs/evidence/videos/sprint1.mp4) |
-| **Sprint 2** | Complete working product walkthrough: real-time dashboard, synthetic drift injection, policy-triggered candidate retraining, automated validation quality gates, dual-key promotion, emergency rollback, and SHA-256 audit logs. | ~2 min | [docs/evidence/videos/sprint2.mp4](docs/evidence/videos/sprint2.mp4) | [View sprint2.mp4 on GitHub](https://github.com/anantha-bit/self-monitoring-mlops-system/blob/main/docs/evidence/videos/sprint2.mp4) |
+| **Sprint 1** | Functional MVP microservice demonstration: core prediction serving, automated telemetry metrics ingestion, two-sample KS & PSI statistical drift detection, PyTorch autoencoder, and isolated QML simulator benchmark. | **60s** (1 min) | [`docs/evidence/videos/sprint1.mp4`](docs/evidence/videos/sprint1.mp4) | [**▶️ Play sprint1.mp4 on GitHub**](https://github.com/anantha-bit/self-monitoring-mlops-system/blob/main/docs/evidence/videos/sprint1.mp4) |
+| **Sprint 2** | Complete working product walkthrough: real-time dashboard, synthetic drift injection, policy-triggered candidate retraining, automated validation quality gates, dual-key promotion, emergency rollback, and SHA-256 audit logs. | **120s** (2 min) | [`docs/evidence/videos/sprint2.mp4`](docs/evidence/videos/sprint2.mp4) | [**▶️ Play sprint2.mp4 on GitHub**](https://github.com/anantha-bit/self-monitoring-mlops-system/blob/main/docs/evidence/videos/sprint2.mp4) |
 
-> Detailed scripts, narration guides, and recording instructions are documented in [docs/SPRINT_1_AND_2_VIDEO_DEMO_GUIDE.md](docs/SPRINT_1_AND_2_VIDEO_DEMO_GUIDE.md).
+> Complete walk-through scripts, narration guides, and timestamped sequences are documented in [**`docs/SPRINT_1_AND_2_VIDEO_DEMO_GUIDE.md`**](docs/SPRINT_1_AND_2_VIDEO_DEMO_GUIDE.md).
+
+---
+
+## 📸 Deliverable Verification Evidence & Screenshots
+
+All deliverable execution evidence is verified against repository [`anantha-bit/self-monitoring-mlops-system`](https://github.com/anantha-bit/self-monitoring-mlops-system):
+
+| Evidence Item | Description | Evidence Artifact |
+| :--- | :--- | :--- |
+| **GitHub Actions CI/CD Pipeline** | All 26 workflow runs passing on `main` and feature branches across all three contributors. | [**`docs/evidence/01_github_actions_ci_runs_benchmark.png`**](docs/evidence/01_github_actions_ci_runs_benchmark.png) |
+| **GitHub Projects Agile Board** | 19 completed user stories mapped across Sprint-1, Sprint-2, and Sprint-3 with Assignees and Story Points. | [**`docs/evidence/02_github_projects_board_benchmark.png`**](docs/evidence/02_github_projects_board_benchmark.png) |
+| **Interactive Code Coverage Explorer** | Full line-by-line coverage report with visual statement and branch highlighting. | [**`docs/reports/htmlcov/index.html`**](docs/reports/htmlcov/index.html) |
 
 ---
 
@@ -151,6 +185,11 @@ uvicorn app.main:app --reload --port 8000
 - Open **`http://localhost:8000/docs`** for interactive Swagger API documentation.
 - Open **`http://localhost:8000/api/v1/metrics/prometheus`** for live Prometheus exposition text.
 
+### 3. Launch via Docker Compose
+```bash
+docker compose up --build -d
+```
+
 ---
 
 ## 🧪 Automated Test Execution (TC-01 through TC-25)
@@ -196,6 +235,13 @@ python -m pytest tests/ --cov=app --cov-branch --cov-report=term-missing --cov-r
 │   ├── config.py                          # Environment & threshold configuration
 │   └── main.py                            # FastAPI application initialization & lifespan
 ├── docs/
+│   ├── evidence/                          # Verified Deliverables Part-2 & Part-3 Evidence
+│   │   ├── 01_github_actions_ci_runs_benchmark.png # CI pipeline execution evidence
+│   │   ├── 02_github_projects_board_benchmark.png  # GitHub Projects board & 19 backlog items
+│   │   └── videos/                        # Playable MP4 demonstration videos
+│   │       ├── sprint1.mp4                # 60s Sprint-1 MVP video demo
+│   │       ├── sprint2.mp4                # 120s Sprint-2 product video demo
+│   │       └── README.md                  # Video descriptions and narration references
 │   ├── reports/                           # Formal Deliverables Part-3 Test Reports
 │   │   ├── UNIT_TEST_REPORT.md            # Comprehensive Unit Test Report (25 tests)
 │   │   ├── SYSTEM_VALIDATION_REPORT.md    # IEEE SRS System Validation Report
