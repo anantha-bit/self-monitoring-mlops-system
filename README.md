@@ -22,6 +22,19 @@ An end-to-end, production-ready MLOps monitoring and automated recovery system d
 
 ---
 
+---
+
+## 🎥 Sprint Demonstration Videos
+
+In accordance with the Software Engineering Mini-Project Deliverables (Part 1 and Part 2), video demonstrations for each sprint have been recorded, verified, and committed to the repository:
+
+| Sprint | Deliverable Description | Duration | Repository Path | Direct GitHub Link |
+| :--- | :--- | :---: | :--- | :--- |
+| **Sprint 1** | Functional MVP microservice demonstration: core prediction serving, automated telemetry metrics ingestion, two-sample KS & PSI statistical drift detection, PyTorch autoencoder, and isolated QML simulator benchmark. | ~1 min | [docs/evidence/videos/sprint1.mp4](docs/evidence/videos/sprint1.mp4) | [View sprint1.mp4 on GitHub](https://github.com/anantha-bit/self-monitoring-mlops-system/blob/main/docs/evidence/videos/sprint1.mp4) |
+| **Sprint 2** | Complete working product walkthrough: real-time dashboard, synthetic drift injection, policy-triggered candidate retraining, automated validation quality gates, dual-key promotion, emergency rollback, and SHA-256 audit logs. | ~2 min | [docs/evidence/videos/sprint2.mp4](docs/evidence/videos/sprint2.mp4) | [View sprint2.mp4 on GitHub](https://github.com/anantha-bit/self-monitoring-mlops-system/blob/main/docs/evidence/videos/sprint2.mp4) |
+
+> Detailed scripts, narration guides, and recording instructions are documented in [docs/SPRINT_1_AND_2_VIDEO_DEMO_GUIDE.md](docs/SPRINT_1_AND_2_VIDEO_DEMO_GUIDE.md).
+
 ## 🏛️ System Architecture
 
 ```mermaid
