@@ -5,10 +5,12 @@
 [![FastAPI](https://img.shields.io/badge/Framework-FastAPI-009688.svg)](https://fastapi.tiangolo.com/)
 [![PyTorch](https://img.shields.io/badge/Deep%20Learning-PyTorch-EE4C2C.svg)](https://pytorch.org/)
 [![Docker](https://img.shields.io/badge/Container-Docker-2496ED.svg)](https://www.docker.com/)
-[![Tests Passing](https://img.shields.io/badge/Test%20Suite-18%20Passed-brightgreen.svg)](tests/)
+[![Tests Passing](https://img.shields.io/badge/Test%20Suite-25%20Passed-brightgreen.svg)](tests/)
+[![Coverage](https://img.shields.io/badge/Coverage-86%25-brightgreen.svg)](docs/reports/CODE_COVERAGE_REPORT.md)
+[![Release](https://img.shields.io/badge/Release-v1.1.0--sprint3-blue.svg)](https://github.com/anantha-bit/self-monitoring-mlops-system/releases/tag/v1.1.0-sprint3)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-An end-to-end, production-ready MLOps monitoring and automated recovery system designed for tabular machine learning models. Built in compliance with IEEE 29148 requirements specifications and Deliverables Part-1 & Part-2 of the Software Engineering Mini-Project.
+An end-to-end, production-ready MLOps monitoring and automated recovery system designed for tabular machine learning models. Built in compliance with IEEE 29148 requirements specifications and Deliverables Part-1, Part-2, and Part-3 of the Software Engineering Mini-Project.
 
 ---
 
@@ -16,17 +18,37 @@ An end-to-end, production-ready MLOps monitoring and automated recovery system d
 
 | Name | USN | GitHub Profile | Project Responsibility |
 | :--- | :--- | :--- | :--- |
-| **Anantha Krishna M A** | **PES1UG24AM036** | [@anantha-bit](https://github.com/anantha-bit) | **Project Lead**, Core API, Recovery Orchestration & CI/CD Packaging |
-| **AKASH G K** | **PES1UG24AM022** | [@akashgkuradagi](https://github.com/akashgkuradagi) | **Contributor**, Metrics Collection, Statistical Drift Engine & Baseline Models |
-| **AMIT PRASAD S G** | **PES1UG24AM033** | [@prasadamith05-png](https://github.com/prasadamith05-png) | **Contributor**, DL Sequence Autoencoder, QML Benchmark, RBAC & Dashboard |
+| **Anantha Krishna M A** | **PES1UG24AM036** | [@anantha-bit](https://github.com/anantha-bit) | **Project Lead**, Core API, Recovery Orchestration, E2E Integration & Release Manager |
+| **AKASH G K** | **PES1UG24AM022** | [@akashgkuradagi](https://github.com/akashgkuradagi) | **Contributor**, Metrics Collection, Statistical Drift Engine, Benchmarking & Tripwire |
+| **AMIT PRASAD S G** | **PES1UG24AM033** | [@prasadamith05-png](https://github.com/prasadamith05-png) | **Contributor**, DL Sequence Autoencoder, QML Benchmark, RBAC & Audit Verifier |
 
 ---
+
+## 📑 Software Engineering Mini-Project Deliverables Part-3
+
+In strict accordance with the **SE Mini-Project Deliverables Part-3** instructions:
+1. **Test Cases Updation:**
+   - Expanded from 18 to **25 automated test cases** covering newly developed Sprint-3 components (statistical sensitivity sweeps, autoencoder reconstruction attribution, continuous health tripwires, and SHA-256 audit chain verification).
+   - Fully updated and executed in [**docs/04_Test_Case_Catalogue_Self_Monitoring_MLOps_System.md**](docs/04_Test_Case_Catalogue_Self_Monitoring_MLOps_System.md) and [**docs/02_Test_Plan_Self_Monitoring_MLOps_System.md**](docs/02_Test_Plan_Self_Monitoring_MLOps_System.md).
+2. **Testing (2nd Nov to 6th Nov 2026):**
+   - 100% test completion with **25/25 tests passing** in ~8.5 seconds.
+   - **86% code coverage** achieved (88.8% statement coverage, 682/768 statements).
+   - Generated and uploaded the 4 required test reports to the repository's `docs/` and `docs/reports/` directories:
+     - 📘 [**Unit Test Report** (`docs/reports/UNIT_TEST_REPORT.md`)](docs/reports/UNIT_TEST_REPORT.md) | [Direct in docs/](docs/UNIT_TEST_REPORT.md)
+     - 📗 [**System Validation Report** (`docs/reports/SYSTEM_VALIDATION_REPORT.md`)](docs/reports/SYSTEM_VALIDATION_REPORT.md) | [Direct in docs/](docs/SYSTEM_VALIDATION_REPORT.md)
+     - 📙 [**Code Coverage Report** (`docs/reports/CODE_COVERAGE_REPORT.md`)](docs/reports/CODE_COVERAGE_REPORT.md) | [Direct in docs/](docs/CODE_COVERAGE_REPORT.md)
+     - 📕 [**Branch Coverage Report** (`docs/reports/BRANCH_COVERAGE_REPORT.md`)](docs/reports/BRANCH_COVERAGE_REPORT.md) | [Direct in docs/](docs/BRANCH_COVERAGE_REPORT.md)
+     - 🌐 [Interactive HTML Coverage Explorer (`docs/reports/htmlcov/index.html`)](docs/reports/htmlcov/index.html)
+3. **Sprint-3 Parallel Activity (2nd Nov to 6th Nov 2026):**
+   - Completed parallel development of Sprint-3 features and backlog items (#13 to #19).
+   - Complete documentation in [**docs/SPRINT_3_DOCUMENTATION.md**](docs/SPRINT_3_DOCUMENTATION.md) and [**BACKLOG.md**](BACKLOG.md).
+   - Code contributions authored across all three team members and release tagged [`v1.1.0-sprint3`](https://github.com/anantha-bit/self-monitoring-mlops-system/releases/tag/v1.1.0-sprint3).
 
 ---
 
 ## 🎥 Sprint Demonstration Videos
 
-In accordance with the Software Engineering Mini-Project Deliverables (Part 1 and Part 2), video demonstrations for each sprint have been recorded, verified, and committed to the repository:
+In accordance with the Software Engineering Mini-Project Deliverables, video demonstrations for each sprint have been recorded, verified, and committed to the repository:
 
 | Sprint | Deliverable Description | Duration | Repository Path | Direct GitHub Link |
 | :--- | :--- | :---: | :--- | :--- |
@@ -34,6 +56,8 @@ In accordance with the Software Engineering Mini-Project Deliverables (Part 1 an
 | **Sprint 2** | Complete working product walkthrough: real-time dashboard, synthetic drift injection, policy-triggered candidate retraining, automated validation quality gates, dual-key promotion, emergency rollback, and SHA-256 audit logs. | ~2 min | [docs/evidence/videos/sprint2.mp4](docs/evidence/videos/sprint2.mp4) | [View sprint2.mp4 on GitHub](https://github.com/anantha-bit/self-monitoring-mlops-system/blob/main/docs/evidence/videos/sprint2.mp4) |
 
 > Detailed scripts, narration guides, and recording instructions are documented in [docs/SPRINT_1_AND_2_VIDEO_DEMO_GUIDE.md](docs/SPRINT_1_AND_2_VIDEO_DEMO_GUIDE.md).
+
+---
 
 ## 🏛️ System Architecture
 
@@ -46,7 +70,9 @@ flowchart TD
         Collector -->|Sliding Windows| DriftEngine["Statistical Drift Analyzer\n(KS-Test & PSI) (FR-03)"]
         DriftEngine -->|Threshold Exceeded| AlertMgr["Alert Manager (FR-08)"]
         Collector -->|Temporal Sequence| DLAutoencoder["PyTorch Sequence Autoencoder (FR-06)"]
-        Benchmark["QML Simulator Benchmark (FR-07)"] -.->|Isolated Reports| Registry
+        Benchmark["Statistical Sensitivity Benchmark (FR-03, NFR-03)"] -.->|Sensitivity Matrix| DriftEngine
+        DLVisualizer["DL Latent Anomaly Attribution (FR-06)"] -.->|Per-Feature Loss| DLAutoencoder
+        QML["QML Simulator Benchmark (FR-07)"] -.->|Isolated Reports| Registry
     end
 
     subgraph Autonomous Recovery & Safety Gates
@@ -57,16 +83,19 @@ flowchart TD
         Validator -->|Dual Approval| HumanApproval["Authorized ML Engineer Approval (FR-14)"]
         HumanApproval -->|Promote| ActiveModel["Production Active Model"]
         ActiveModel -.->|Post-Promotion Anomaly| Rollback["Automated Rollback Engine (FR-12)"]
+        Tripwire["Continuous Health Tripwire (FR-01, FR-12)"] -->|Consecutive Failures| Rollback
         Rollback -.->|Restore| StableModel["Last Known Stable Model"]
     end
 
     subgraph Security & Governance
         API & Policy & HumanApproval -->|Audit Events| AuditLogger["Tamper-Resistant Audit Logger\n(SHA-256 Hash Chain) (SR-05)"]
+        Verifier["Audit Chain Verifier (FR-11, SR-05)"] -->|Integrity Check| AuditLogger
         RBAC["API Key & Role-Based Access Control (SR-01, SR-02)"] --> API
     end
 
-    subgraph User Experience
+    subgraph User Experience & Observability
         Dashboard["Interactive Web Dashboard (FR-13, NFR-08)"] <-->|REST API| API
+        PromScraper["Prometheus Metrics Exporter (FR-02, NFR-07)"] <-->|/api/v1/metrics/prometheus| API
     end
 ```
 
@@ -76,94 +105,61 @@ flowchart TD
 
 1. **Production Prediction Microservice (`FR-01`, `FR-02`):**
    - High-throughput asynchronous serving using FastAPI and Scikit-learn Random Forest baseline.
-   - P95 latency sub-50ms with automated telemetry capturing request counts, latencies, and input distributions.
+   - P95 latency sub-20ms ($18.4\text{ ms}$ verified) with automated telemetry capturing request counts, latencies, and input distributions.
 2. **Multi-Method Drift Detection Engine (`FR-03`, `FR-08`):**
    - Two-sample **Kolmogorov-Smirnov (KS)** tests on numerical distributions.
    - **Population Stability Index (PSI)** quantile binned comparisons.
    - Real-time alert dispatching across severity levels (`WARNING`, `CRITICAL`).
+   - Statistical sensitivity benchmark sweep testing shifts from $0.0\sigma$ to $3.0\sigma$.
 3. **Multi-Paradigm Model Experiments (`FR-05`, `FR-06`, `FR-07`):**
    - **Classical ML:** Random Forest classifier on multidimensional tabular features with versioned hyperparameter logging.
-   - **Deep Learning:** PyTorch Temporal Sequence Autoencoder detecting telemetry anomalies via reconstruction loss spiking.
-   - **Quantum ML Benchmark:** Isolated 4-qubit parameterized variational quantum circuit (VQC) benchmark with angle embedding and CNOT entanglement (governed by FR-07 to isolate recovery decisions).
+   - **Deep Learning:** PyTorch Temporal Sequence Autoencoder detecting telemetry anomalies and attributing per-feature reconstruction errors.
+   - **Quantum ML Benchmark:** Isolated 4-qubit parameterized variational quantum circuit (VQC) benchmark with angle embedding and CNOT entanglement.
 4. **Automated Recovery Policy & Quality Gates (`FR-09`, `FR-10`, `NFR-10`):**
    - Policy evaluates drift severity, error rates, and latency SLOs before candidate retraining.
    - Strict candidate validation gate: accuracy >= 80%, latency <= 150ms, and zero regression vs stable baseline.
    - **Dual-key promotion:** Candidate can **never** be promoted without both passing validation and authorized human approval.
-5. **Emergency Rollback (`FR-12`):**
+5. **Continuous Health Tripwire & Emergency Rollback (`FR-01`, `FR-12`):**
+   - `ContinuousHealthTripwire` tracks consecutive telemetry spikes, triggering instant rollback after 3 failures.
    - Instant 1-click fallback to the last known stable model version if post-promotion anomalies are detected.
-6. **Enterprise Security & Audit Logging (`SR-01` ~ `SR-06`, `FR-11`):**
+6. **Enterprise Security & Cryptographic Audit Verification (`SR-01` ~ `SR-06`, `FR-11`):**
    - Role-Based Access Control (`Admin`, `MLEngineer`, `Viewer`, `Service`).
-   - Append-only audit logger using cryptographic **SHA-256 hash chaining** for tamper-evidence.
+   - Append-only audit logger using cryptographic **SHA-256 hash chaining** with independent chain verifier utility.
    - Request size sanitization and strict secret protection against credential leakage in error traces.
-7. **Interactive Real-Time Dashboard (`FR-13`, `NFR-08`):**
+7. **Interactive Real-Time Dashboard & Live Prometheus Exporter (`FR-13`, `NFR-08`, `NFR-07`):**
    - Live metric gauges, telemetry simulators, drift monitors, candidate validation/promotion controls, and audit logs.
+   - Scrapable Prometheus exposition endpoint at `/api/v1/metrics/prometheus`.
 
 ---
 
-## 📋 Requirements Traceability Matrix
+## ⚡ Quick Start
 
-| Requirement | Description | Component | Verified By | Status |
-| :--- | :--- | :--- | :--- | :---: |
-| **FR-01** | Health endpoint with version metadata | `app/api/routes.py` | `TC-01` | **PASS** |
-| **FR-02** | Telemetry and prediction metric collection | `app/monitoring/collector.py` | `TC-02` | **PASS** |
-| **FR-03** | Window comparison and statistical drift | `app/monitoring/drift.py` | `TC-03`, `TC-04` | **PASS** |
-| **FR-04** | Ground-truth availability reporting | `app/monitoring/drift.py` | `TC-06` | **PASS** |
-| **FR-05** | Classical ML monitoring experiments | `app/models/ml_monitor.py` | `TC-05` | **PASS** |
-| **FR-06** | DL sequence anomaly detector (PyTorch) | `app/models/dl_monitor.py` | `TC-05` | **PASS** |
-| **FR-07** | Isolated QML simulator benchmark | `app/models/qml_benchmark.py` | `TC-05` | **PASS** |
-| **FR-08** | Automated alerting on threshold breach | `app/monitoring/drift.py` | `TC-04` | **PASS** |
-| **FR-09** | Recovery policy trigger evaluation | `app/recovery/policy.py` | `TC-07` | **PASS** |
-| **FR-10** | Validation gates & dual approval gate | `app/recovery/validator.py` | `TC-07`, `TC-18` | **PASS** |
-| **FR-11** | Tamper-resistant audit logging | `app/security/audit.py` | `TC-12` | **PASS** |
-| **FR-12** | Automated rollback to stable version | `app/registry/mlflow_adapter.py` | `TC-08` | **PASS** |
-| **FR-13** | Interactive web dashboard | `app/dashboard/index.html` | UI Demo | **PASS** |
-| **FR-14** | Authenticated candidate decision API | `app/api/routes.py` | `TC-11` | **PASS** |
-| **NFR-01/09**| P95 latency < 500ms & 1000+ events scale | `app/monitoring/collector.py` | `TC-09` | **PASS** |
-| **NFR-02** | Fault tolerance during worker crash | `app/monitoring/drift.py` | `TC-10` | **PASS** |
-| **NFR-04** | Reproducibility of experiments & seeds | `app/models/ml_monitor.py` | `TC-16` | **PASS** |
-| **NFR-05/06**| Maintainability & Docker portability | `Dockerfile`, `docker-compose.yml` | `TC-15` | **PASS** |
-| **SR-01~06** | Authentication, RBAC, Secret Hygiene | `app/security/auth.py` | `TC-11, 13, 14, 17`| **PASS** |
-
----
-
-## 🛠️ Quickstart & Local Setup
-
-### 1. Clone & Set Up Virtual Environment
+### 1. Environment Setup
 ```bash
 git clone https://github.com/anantha-bit/self-monitoring-mlops-system.git
 cd self-monitoring-mlops-system
-
-python -m venv venv
-# Windows:
-venv\Scripts\activate
-# Linux/macOS:
-source venv/bin/activate
-
+python -m venv .venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 pip install -r requirements.txt
-pip install httpx
 ```
 
-### 2. Run Application
+### 2. Launch Application
 ```bash
-uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+uvicorn app.main:app --reload --port 8000
 ```
-Open **`http://localhost:8000`** in your browser to launch the live dashboard!
-Open **`http://localhost:8000/docs`** for interactive Swagger API documentation.
-
-### 3. Run with Docker Compose
-```bash
-docker compose up --build -d
-```
+- Open **`http://localhost:8000`** in your browser to launch the live dashboard.
+- Open **`http://localhost:8000/docs`** for interactive Swagger API documentation.
+- Open **`http://localhost:8000/api/v1/metrics/prometheus`** for live Prometheus exposition text.
 
 ---
 
-## 🧪 Automated Test Execution (TC-01 through TC-18)
+## 🧪 Automated Test Execution (TC-01 through TC-25)
 
-Run the full pytest suite verifying all 18 test cases:
+Run the complete 25-case test suite with line and branch coverage analysis:
 ```bash
-pytest tests/ -v
+python -m pytest tests/ --cov=app --cov-branch --cov-report=term-missing --cov-report=html:docs/reports/htmlcov --cov-report=json:docs/reports/coverage.json
 ```
-All 18 test cases will pass with full validation evidence.
+**Results:** All 25 test cases pass in ~8.5 seconds with **86% code coverage**.
 
 ---
 
@@ -171,58 +167,82 @@ All 18 test cases will pass with full validation evidence.
 
 ```
 ├── .github/workflows/
-│   ├── ci.yml                     # Automated CI test execution & Docker build
-│   └── pr-automation.yml          # Automated PR labeling & checks
+│   ├── ci.yml                             # Automated CI test execution & Docker build
+│   └── pr-automation.yml                  # Automated PR labeling & checks
 ├── app/
 │   ├── api/
-│   │   └── routes.py              # REST API endpoints (Health, Ingest, Drift, Candidates, Rollback)
+│   │   └── routes.py                      # REST API endpoints (Health, Ingest, Drift, Candidates, Rollback, Prometheus)
 │   ├── dashboard/
-│   │   └── index.html             # Real-time interactive UI dashboard
+│   │   └── index.html                     # Real-time interactive UI dashboard
 │   ├── models/
-│   │   ├── ml_monitor.py          # Classical ML baseline (Scikit-Learn Random Forest)
-│   │   ├── dl_monitor.py          # PyTorch Sequence Anomaly Autoencoder
-│   │   └── qml_benchmark.py       # Isolated 4-Qubit Variational Quantum Simulator
+│   │   ├── ml_monitor.py                  # Classical ML baseline (Scikit-Learn Random Forest)
+│   │   ├── dl_monitor.py                  # PyTorch Sequence Anomaly Autoencoder
+│   │   ├── dl_visualizer.py               # Feature reconstruction error attribution visualizer
+│   │   └── qml_benchmark.py               # Isolated 4-Qubit Variational Quantum Simulator
 │   ├── monitoring/
-│   │   ├── collector.py           # Ingestion pipeline & Prometheus metrics
-│   │   └── drift.py               # Statistical drift engine (KS-test & PSI)
+│   │   ├── collector.py                   # Ingestion pipeline & Prometheus metrics
+│   │   ├── drift.py                       # Statistical drift engine (KS-test & PSI)
+│   │   └── benchmark.py                   # Stepwise variational shift sensitivity benchmark suite
 │   ├── recovery/
-│   │   ├── policy.py              # Recovery policy engine & trigger rules
-│   │   └── validator.py           # Automated quality gates & regression checks
+│   │   ├── policy.py                      # Recovery policy engine & trigger rules
+│   │   ├── validator.py                   # Automated quality gates & regression checks
+│   │   └── health_checker.py              # Continuous health telemetry tripwire monitor
 │   ├── registry/
-│   │   └── mlflow_adapter.py      # Versioned model registry adapter
+│   │   └── mlflow_adapter.py              # Versioned model registry adapter
 │   ├── security/
-│   │   ├── auth.py                # API key authentication & RBAC
-│   │   └── audit.py               # Tamper-resistant SHA-256 hash-chained audit logger
-│   ├── config.py                  # Environment & threshold configuration
-│   └── main.py                    # FastAPI application initialization & lifespan
+│   │   ├── auth.py                        # API key authentication & RBAC
+│   │   ├── audit.py                       # Tamper-resistant SHA-256 hash-chained audit logger
+│   │   └── verifier.py                    # Cryptographic audit ledger chain verifier
+│   ├── config.py                          # Environment & threshold configuration
+│   └── main.py                            # FastAPI application initialization & lifespan
 ├── docs/
-│   ├── deliverables_part1/        # Original Part-1 DOCX submissions
+│   ├── reports/                           # Formal Deliverables Part-3 Test Reports
+│   │   ├── UNIT_TEST_REPORT.md            # Comprehensive Unit Test Report (25 tests)
+│   │   ├── SYSTEM_VALIDATION_REPORT.md    # IEEE SRS System Validation Report
+│   │   ├── CODE_COVERAGE_REPORT.md        # Line-by-line coverage analysis (86%)
+│   │   ├── BRANCH_COVERAGE_REPORT.md      # Conditional branch coverage analysis
+│   │   ├── coverage.json                  # Machine-readable coverage data
+│   │   └── htmlcov/                       # Interactive HTML coverage report
+│   ├── UNIT_TEST_REPORT.md                # Direct doc link for deliverable grading
+│   ├── SYSTEM_VALIDATION_REPORT.md        # Direct doc link for deliverable grading
+│   ├── CODE_COVERAGE_REPORT.md            # Direct doc link for deliverable grading
+│   ├── BRANCH_COVERAGE_REPORT.md          # Direct doc link for deliverable grading
 │   ├── 01_SRS_Self_Monitoring_MLOps_System.md
 │   ├── 02_Test_Plan_Self_Monitoring_MLOps_System.md
 │   ├── 03_Architecture_Design_Self_Monitoring_MLOps_System.md
 │   ├── 04_Test_Case_Catalogue_Self_Monitoring_MLOps_System.md
-│   ├── SPRINT_BACKLOG_AND_DEVIATIONS.md    # Backlog, Story Points, Velocity & Deviations
-│   └── SPRINT_1_AND_2_VIDEO_DEMO_GUIDE.md  # 1-min & 2-min video demonstration scripts
-├── tests/
-│   ├── test_tc01_tc02_health_metrics.py     # TC-01, TC-02, TC-09
-│   ├── test_tc03_tc04_tc06_drift.py         # TC-03, TC-04, TC-06
-│   ├── test_tc05_tc16_experiments.py        # TC-05, TC-16
-│   ├── test_tc07_tc08_tc18_recovery_gates.py # TC-07, TC-08, TC-18
-│   ├── test_tc10_fault_tolerance.py         # TC-10
-│   ├── test_tc11_tc12_security_audit.py     # TC-11, TC-12, TC-17
-│   ├── test_tc13_tc14_payload_secrets.py    # TC-13, TC-14
-│   └── test_tc15_container_smoke.py         # TC-15
+│   ├── SPRINT_3_DOCUMENTATION.md          # Sprint 3 Agile planning, stories & velocity
+│   ├── SPRINT_BACKLOG_AND_DEVIATIONS.md   # Backlog, Story Points, Velocity & Deviations
+│   └── SPRINT_1_AND_2_VIDEO_DEMO_GUIDE.md # 1-min & 2-min video demonstration scripts
+├── tests/                                 # 25 Automated Pytest Test Cases
+│   ├── test_tc01_tc02_health_metrics.py
+│   ├── test_tc03_tc04_tc06_drift.py
+│   ├── test_tc05_tc16_experiments.py
+│   ├── test_tc07_tc08_tc18_recovery_gates.py
+│   ├── test_tc10_fault_tolerance.py
+│   ├── test_tc11_tc12_security_audit.py
+│   ├── test_tc13_tc14_payload_secrets.py
+│   ├── test_tc15_container_smoke.py
+│   ├── test_tc19_drift_sensitivity_benchmark.py
+│   ├── test_tc20_dl_latent_attribution.py
+│   ├── test_tc21_health_tripwire.py
+│   ├── test_tc22_audit_chain_verification.py
+│   ├── test_tc23_e2e_recovery_workflow.py
+│   ├── test_tc24_prometheus_live_export.py
+│   └── test_tc25_recovery_policy_coverage.py
 ├── Dockerfile
 ├── docker-compose.yml
 ├── requirements.txt
+├── pytest.ini
+├── BACKLOG.md                             # Complete Agile Sprint Backlog (19 items, 106 SP)
 └── README.md
 ```
 
 ---
 
-## 📜 Development Freeze & Part-2 Submission Note
-In accordance with Part-2 of the Software Engineering Mini-Project guidelines:
-- Backlog created and estimated in GitHub Projects.
-- Sprint-1 (19th-23rd Oct) and Sprint-2 (26th-30th Oct) successfully executed.
-- Pull requests and commits contributed by all three team members: **Anantha Krishna M A**, **AKASH G K**, and **AMIT PRASAD S G**.
-- Development cycle officially **FROZEN** as of 30th October 2026.
+## 📜 Deliverable Closure Note
+In accordance with Part-1, Part-2, and Part-3 of the Software Engineering Mini-Project guidelines:
+- **Part-1:** SRS, Test Plan, Architectural Design, and Test Case Specifications established.
+- **Part-2:** Agile Backlog created in GitHub Projects, Sprints 1 and 2 completed, video artifacts verified, and release tagged `v1.0.0-sprint2`.
+- **Part-3:** Parallel Sprint 3 completed, 25 test cases executed with 100% pass rate, 86% coverage achieved, 4 formal test reports generated in `docs/`, and release tagged `v1.1.0-sprint3`.
+- Contributions committed and pushed across all three team members: **Anantha Krishna M A** ([`@anantha-bit`](https://github.com/anantha-bit)), **AKASH G K** ([`@akashgkuradagi`](https://github.com/akashgkuradagi)), and **AMIT PRASAD S G** ([`@prasadamith05-png`](https://github.com/prasadamith05-png)).

@@ -2,11 +2,11 @@ Software Test Plan
 
 Self-Monitoring MLOps System: An Intelligent Framework for ML Model Drift Detection, Monitoring, and Automated Recovery
 
-Deliverable 2 — Test Plan
+Deliverable 2 — Test Plan (Deliverables Part-3 Updated)
 
-Version 1.0
+Version 1.1.0
 
-Prepared on: 10 October 2026
+Prepared on: 10 October 2026 | Updated on: 6 November 2026
 
 Team Members:
 
@@ -16,7 +16,7 @@ AKASH G K — PES1UG24AM022
 
 AMIT PRASAD S G — PES1UG24AM033
 
-Department: CSE (AI & ML)
+Department: CSE (AI & ML), PES University
 
 Document Control
 
@@ -30,19 +30,19 @@ Test Plan - Self-Monitoring MLOps System
 
 Version
 
-Version 1.0
+Version 1.1.0
 
 Status
 
-Draft for academic review
+Approved & Executed (Deliverables Part-3)
 
 Date
 
-10 October 2026
+6 November 2026
 
 Owner
 
-[Student Name / USN / Section]
+Anantha Krishna M A, AKASH G K, AMIT PRASAD S G
 
 Review note
 
@@ -356,6 +356,87 @@ NFR-05, NFR-06
 
 CI tests pass, image builds, and container health check succeeds.
 
+
+TC-16
+
+Experiment reproducibility check
+
+NFR-04
+
+Identical model metrics and loss curves obtained across independent runs with identical random seed.
+
+TC-17
+
+Metrics/admin network restriction
+
+SR-06
+
+Access to internal metrics and administrative endpoints without proper authorization is denied with HTTP 403.
+
+TC-18
+
+Candidate validation regression gate
+
+FR-10, NFR-10
+
+Candidate model with substandard accuracy or excessive latency is automatically blocked from promotion.
+
+TC-19
+
+Drift sensitivity benchmark suite
+
+FR-03, FR-04, NFR-03
+
+Stepwise shift sweep (0.0 to 3.0 std) demonstrates monotonic PSI scaling from baseline (<0.25) to significant drift (>=0.25).
+
+TC-20
+
+DL autoencoder latent attribution
+
+FR-06, FR-07
+
+Per-feature reconstruction error correctly pinpoints the exact anomalous feature responsible for drift.
+
+TC-21
+
+Continuous health tripwire
+
+FR-01, FR-12, NFR-02
+
+Continuous telemetry monitor triggers automated fallback rollback after consecutive failure threshold is breached.
+
+TC-22
+
+Audit chain cryptographic verification
+
+FR-11, SR-03, SR-05
+
+SHA-256 hash chaining validates intact audit ledgers and raises tamper alarm upon modified historical entries.
+
+TC-23
+
+End-to-end recovery pipeline
+
+FR-08, FR-09, FR-10, FR-12
+
+Full autonomous loop from prediction, drift alert, gate validation, to live promotion completes without regression.
+
+TC-24
+
+Prometheus live metrics export
+
+FR-02, NFR-01, NFR-07
+
+Metrics endpoint (/api/v1/metrics/prometheus) emits valid exposition text scrapeable by monitoring servers.
+
+TC-25
+
+Recovery policy boundary and routes
+
+FR-13, NFR-08, NFR-10
+
+Dynamic recovery policies and dashboard status routes return consistent state without unhandled exceptions.
+
 4.4 Defect severity and priority
 
 Severity
@@ -450,17 +531,21 @@ Access restricted by configured network/auth policy.
 
 SR-06
 
-5.2 Test deliverables
+5.2 Test deliverables (Deliverables Part-3 Formal Reports)
 
-Automated unit and integration test suite.
+Automated unit and integration test suite (25 test cases across tests/ directory).
 
-Test execution report with pass/fail status, environment and commit SHA.
+Unit Test Report (docs/reports/UNIT_TEST_REPORT.md and docs/UNIT_TEST_REPORT.md).
 
-Security validation results and defect list.
+System Validation Report (docs/reports/SYSTEM_VALIDATION_REPORT.md and docs/SYSTEM_VALIDATION_REPORT.md).
 
-Coverage report and CI build/test logs.
+Code Coverage Report (docs/reports/CODE_COVERAGE_REPORT.md and docs/CODE_COVERAGE_REPORT.md) with 86% overall coverage.
 
-Traceability matrix linking SRS requirements to test cases.
+Branch Coverage Report (docs/reports/BRANCH_COVERAGE_REPORT.md and docs/BRANCH_COVERAGE_REPORT.md) with 69.3% branch coverage.
+
+Interactive HTML Coverage Explorer (docs/reports/htmlcov/index.html).
+
+Traceability matrix linking all 14 FRs, 12 NFRs, and 6 SRs to test cases TC-01 through TC-25.
 
 5.3 Roles and responsibilities
 
