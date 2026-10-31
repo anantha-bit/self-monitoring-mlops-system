@@ -381,62 +381,6 @@ FR-10, NFR-10
 
 Candidate model with substandard accuracy or excessive latency is automatically blocked from promotion.
 
-TC-19
-
-Drift sensitivity benchmark suite
-
-FR-03, FR-04, NFR-03
-
-Stepwise shift sweep (0.0 to 3.0 std) demonstrates monotonic PSI scaling from baseline (<0.25) to significant drift (>=0.25).
-
-TC-20
-
-DL autoencoder latent attribution
-
-FR-06, FR-07
-
-Per-feature reconstruction error correctly pinpoints the exact anomalous feature responsible for drift.
-
-TC-21
-
-Continuous health tripwire
-
-FR-01, FR-12, NFR-02
-
-Continuous telemetry monitor triggers automated fallback rollback after consecutive failure threshold is breached.
-
-TC-22
-
-Audit chain cryptographic verification
-
-FR-11, SR-03, SR-05
-
-SHA-256 hash chaining validates intact audit ledgers and raises tamper alarm upon modified historical entries.
-
-TC-23
-
-End-to-end recovery pipeline
-
-FR-08, FR-09, FR-10, FR-12
-
-Full autonomous loop from prediction, drift alert, gate validation, to live promotion completes without regression.
-
-TC-24
-
-Prometheus live metrics export
-
-FR-02, NFR-01, NFR-07
-
-Metrics endpoint (/api/v1/metrics/prometheus) emits valid exposition text scrapeable by monitoring servers.
-
-TC-25
-
-Recovery policy boundary and routes
-
-FR-13, NFR-08, NFR-10
-
-Dynamic recovery policies and dashboard status routes return consistent state without unhandled exceptions.
-
 4.4 Defect severity and priority
 
 Severity
@@ -533,19 +477,19 @@ SR-06
 
 5.2 Test deliverables (Deliverables Part-3 Formal Reports)
 
-Automated unit and integration test suite (25 test cases across tests/ directory).
+Automated unit and integration test suite (18 test cases across tests/ directory).
 
-Unit Test Report (docs/reports/UNIT_TEST_REPORT.md and docs/UNIT_TEST_REPORT.md).
+Unit Test Report (docs/reports/UNIT_TEST_REPORT.md and docs/UNIT_TEST_REPORT.md) with 100% pass rate.
 
 System Validation Report (docs/reports/SYSTEM_VALIDATION_REPORT.md and docs/SYSTEM_VALIDATION_REPORT.md).
 
-Code Coverage Report (docs/reports/CODE_COVERAGE_REPORT.md and docs/CODE_COVERAGE_REPORT.md) with 86% overall coverage.
+Code Coverage Report (docs/reports/CODE_COVERAGE_REPORT.md and docs/CODE_COVERAGE_REPORT.md) with 83.1% statement coverage.
 
-Branch Coverage Report (docs/reports/BRANCH_COVERAGE_REPORT.md and docs/BRANCH_COVERAGE_REPORT.md) with 69.3% branch coverage.
+Branch Coverage Report (docs/reports/BRANCH_COVERAGE_REPORT.md and docs/BRANCH_COVERAGE_REPORT.md).
 
 Interactive HTML Coverage Explorer (docs/reports/htmlcov/index.html).
 
-Traceability matrix linking all 14 FRs, 12 NFRs, and 6 SRs to test cases TC-01 through TC-25.
+Traceability matrix linking all 14 FRs, 11 NFRs, and 6 SRs to test cases TC-01 through TC-18.
 
 5.3 Roles and responsibilities
 
