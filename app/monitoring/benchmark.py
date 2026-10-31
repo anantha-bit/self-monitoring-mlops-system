@@ -5,7 +5,7 @@ from app.monitoring.drift import calculate_psi
 class DriftBenchmarkSuite:
     """
     Sensitivity and robustness benchmark suite for Kolmogorov-Smirnov and PSI estimators.
-    Developed by AKASH G K (PES1UG24AM022) - Sprint 1 & 3.
+    Developed by AKASH G K (PES1UG24AM022) - Sprint 1.
     """
     def __init__(self, sample_size: int = 300, seed: int = 42):
         self.sample_size = sample_size

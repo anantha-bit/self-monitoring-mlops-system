@@ -2,7 +2,7 @@
 
 **Project Title:** Self-Monitoring MLOps System: An Intelligent Framework for ML Model Drift Detection, Monitoring, and Automated Recovery  
 **Deliverable:** Deliverable Part-3 — Test Case Catalogue & Execution Evidence  
-**Version:** 1.1.0 (Updated Post-Sprint 3)  
+**Version:** 1.1.0 (Updated Post-Sprint 1 & Sprint 2)  
 **Prepared on:** 6 November 2026  
 
 ---
@@ -10,9 +10,9 @@
 ### Team Members & Contributions
 | Team Member Name | USN | GitHub Username | Role & Test Responsibilities |
 | :--- | :--- | :--- | :--- |
-| **Anantha Krishna M A** | **PES1UG24AM036** | [`@anantha-bit`](https://github.com/anantha-bit) | Project Lead, Test Orchestrator, Core API & E2E Validation Tests (TC-01, TC-02, TC-07, TC-08, TC-09, TC-18, TC-23, TC-24, TC-25) |
-| **AKASH G K** | **PES1UG24AM022** | [`@akashgkuradagi`](https://github.com/akashgkuradagi) | Contributor, Drift Engine, Statistical Sensitivity Benchmarking & Health Tripwire Tests (TC-03, TC-04, TC-06, TC-10, TC-15, TC-19, TC-21) |
-| **AMIT PRASAD S G** | **PES1UG24AM033** | [`@prasadamith05-png`](https://github.com/prasadamith05-png) | Contributor, DL/QML Experiments, Feature Reconstruction Attribution & Security Audit Verifier Tests (TC-05, TC-11, TC-12, TC-13, TC-14, TC-16, TC-17, TC-20, TC-22) |
+| **Anantha Krishna M A** | **PES1UG24AM036** | [`@anantha-bit`](https://github.com/anantha-bit) | Project Lead, Test Orchestrator, Core API & Safety Gate Tests (TC-01, TC-02, TC-07, TC-08, TC-09, TC-18) |
+| **AKASH G K** | **PES1UG24AM022** | [`@akashgkuradagi`](https://github.com/akashgkuradagi) | Contributor, Drift Detection Engine, Fault Tolerance & Container Tests (TC-03, TC-04, TC-06, TC-10, TC-15) |
+| **AMIT PRASAD S G** | **PES1UG24AM033** | [`@prasadamith05-png`](https://github.com/prasadamith05-png) | Contributor, DL/QML Experiments, Security RBAC & Audit Ledger Tests (TC-05, TC-11, TC-12, TC-13, TC-14, TC-16, TC-17) |
 
 ---
 
@@ -26,15 +26,15 @@
 | **Date** | 6 November 2026 |
 | **Course** | Software Engineering Mini-Project |
 | **Department** | Computer Science & Engineering (AI & ML), PES University |
-| **Automated Test Results** | **25 / 25 Passed (100% Pass Rate, 0 Defects)** |
-| **Statement Coverage** | **88.8% (89% display, 682/768 statements)** |
-| **Overall Line + Branch Coverage**| **85.6% (~86%)** |
+| **Automated Test Results** | **18 / 18 Passed (100% Pass Rate, 0 Defects)** |
+| **Statement Coverage** | **83.1% (580 / 698 statements)** |
+| **Overall Line + Branch Coverage**| **79%** |
 
 ---
 
 ## 1. Purpose and Usage
 
-This document expands the test specifications defined in the Software Test Plan into formal, execution-verified test cases. Based on features implemented during Sprint 1, Sprint 2, and Sprint 3 (including statistical drift sensitivity benchmarks, continuous health tripwires, PyTorch autoencoder latent attribution, and cryptographic SHA-256 audit chain verification), the test suite has been updated from its baseline 18 cases to **25 automated test cases**.
+This document expands the test specifications defined in the Software Test Plan into formal, execution-verified test cases. Based on features implemented during Sprint 1 (MVP) and Sprint 2 (Complete Working Product), the test suite has been updated from initial drafts to **18 automated test cases**.
 
 All test cases are implemented as automated Pytest scripts located in the `tests/` directory of the repository and executed automatically in GitHub Actions CI.
 
@@ -303,134 +303,36 @@ All test cases are implemented as automated Pytest scripts located in the `tests
 
 ---
 
-### TC-19 — Drift Sensitivity Benchmark Across Stepwise Variational Shifts
-| Field | Specification |
-| :--- | :--- |
-| **Requirement Trace** | FR-03, FR-04, NFR-03 |
-| **Test Level / Type** | Statistical Benchmark / Unit |
-| **Test Script** | `tests/test_tc19_drift_sensitivity_benchmark.py::test_tc19_drift_sensitivity_benchmark` |
-| **Preconditions** | `DriftBenchmarkSuite` initialized with fixed evaluation seed ($N=300$). |
-| **Test Steps** | 1. Evaluate PSI across shift steps: $0.0\sigma, 0.5\sigma, 1.0\sigma, 2.0\sigma, 3.0\sigma$. 2. Verify monotonic scaling and threshold breach. |
-| **Expected Result** | PSI $< 0.25$ at baseline ($0.0\sigma$); PSI scales monotonically; PSI $\ge 0.25$ at $\ge 2.0\sigma$. |
-| **Execution Status** | **PASSED** ✅ (Execution time: 310 ms) |
-| **Actual Result / Evidence** | Benchmark completed: $\text{PSI}(0.0\sigma)=0.015$, $\text{PSI}(1.0\sigma)=0.124$, $\text{PSI}(2.0\sigma)=0.298$, $\text{PSI}(3.0\sigma)=0.412$. Monotonicity verified. |
-
----
-
-### TC-20 — Deep Learning Autoencoder Latent Reconstruction Attribution
-| Field | Specification |
-| :--- | :--- |
-| **Requirement Trace** | FR-06, FR-07 |
-| **Test Level / Type** | Deep Learning Anomaly Attribution |
-| **Test Script** | `tests/test_tc20_dl_latent_attribution.py::test_tc20_dl_latent_attribution` |
-| **Preconditions** | Trained PyTorch Autoencoder and `DLAnomalyVisualizer` loaded. |
-| **Test Steps** | 1. Inject feature-specific out-of-distribution anomaly into feature index #2. 2. Compute reconstruction attribution. |
-| **Expected Result** | Autoencoder computes per-feature error vector; feature #2 ranked as top anomaly driver. |
-| **Execution Status** | **PASSED** ✅ (Execution time: 780 ms) |
-| **Actual Result / Evidence** | Top anomalous feature identified as index 2 with reconstruction error $0.84$ vs average $0.03$. |
-
----
-
-### TC-21 — Continuous System Health Tripwire & Automated Rollback
-| Field | Specification |
-| :--- | :--- |
-| **Requirement Trace** | FR-01, FR-12, NFR-02 |
-| **Test Level / Type** | Resiliency / System Recovery |
-| **Test Script** | `tests/test_tc21_health_tripwire.py::test_tc21_health_tripwire` |
-| **Preconditions** | `ContinuousHealthTripwire` initialized with consecutive threshold of 3. |
-| **Test Steps** | 1. Record healthy check (counter=0). 2. Record 2 consecutive failures (no rollback yet). 3. Record 3rd consecutive failure. |
-| **Expected Result** | Automated rollback triggered exactly upon reaching threshold (3 consecutive failures). |
-| **Execution Status** | **PASSED** ✅ (Execution time: 165 ms) |
-| **Actual Result / Evidence** | Rollback triggered at 3rd failure; tripwire correctly isolated intermittent spikes and enforced recovery. |
-
----
-
-### TC-22 — Cryptographic SHA-256 Audit Trail Chain Verification & Tamper Detection
-| Field | Specification |
-| :--- | :--- |
-| **Requirement Trace** | FR-11, SR-03, SR-05 |
-| **Test Level / Type** | Cryptographic Security |
-| **Test Script** | `tests/test_tc22_audit_chain_verification.py::test_tc22_audit_chain_verification` |
-| **Preconditions** | Multi-block audit ledger generated with SHA-256 block hash chaining. |
-| **Test Steps** | 1. Verify pristine ledger. 2. Inject modification into payload of block #2. 3. Re-run `AuditChainVerifier`. |
-| **Expected Result** | Pristine ledger verifies `is_valid=True`; tampered ledger reports `is_valid=False` and flags corrupted block 2. |
-| **Execution Status** | **PASSED** ✅ (Execution time: 140 ms) |
-| **Actual Result / Evidence** | `AuditChainVerifier` returned `is_valid=False`, identifying block 2 hash mismatch. Security integrity confirmed. |
-
----
-
-### TC-23 — End-to-End Autonomous Model Recovery, Quarantine, and Gate Promotion Workflow
-| Field | Specification |
-| :--- | :--- |
-| **Requirement Trace** | FR-08, FR-09, FR-10, FR-12 |
-| **Test Level / Type** | End-to-End System Integration |
-| **Test Script** | `tests/test_tc23_e2e_recovery_workflow.py::test_tc23_e2e_recovery_workflow` |
-| **Preconditions** | Full microservice application mounted in test harness. |
-| **Test Steps** | 1. Ingest predictions $\to$ 2. Inject drift $\to$ 3. Verify quarantine $\to$ 4. Register candidate $\to$ 5. Run validation gate $\to$ 6. Promote. |
-| **Expected Result** | Closed-loop lifecycle completes seamlessly; validated candidate model promoted to active status. |
-| **Execution Status** | **PASSED** ✅ (Execution time: 450 ms) |
-| **Actual Result / Evidence** | Full autonomous workflow executed successfully; candidate verified and promoted; active version switched. |
-
----
-
-### TC-24 — Prometheus Live Metric Scraping and Format Verification
-| Field | Specification |
-| :--- | :--- |
-| **Requirement Trace** | FR-02, NFR-01, NFR-07 |
-| **Test Level / Type** | Observability / Standards Compliance |
-| **Test Script** | `tests/test_tc24_prometheus_live_export.py::test_tc24_prometheus_live_export` |
-| **Preconditions** | Application running Prometheus metrics exporter endpoint. |
-| **Test Steps** | 1. Dispatch `GET /api/v1/metrics/prometheus`. 2. Validate HTTP 200, Content-Type, `# HELP`, `# TYPE`, and metric counters. |
-| **Expected Result** | HTTP 200; valid text exposition containing `mlops_predictions_total` and latency metrics. |
-| **Execution Status** | **PASSED** ✅ (Execution time: 130 ms) |
-| **Actual Result / Evidence** | Valid Prometheus exposition text returned; scrapable by Prometheus server with zero formatting errors. |
-
----
-
-### TC-25 — Dynamic Recovery Policy Boundary & Observability Route Acceptance
-| Field | Specification |
-| :--- | :--- |
-| **Requirement Trace** | FR-13, NFR-08, NFR-10 |
-| **Test Level / Type** | Integration / Route Acceptance |
-| **Test Script** | `tests/test_tc25_recovery_policy_coverage.py::test_tc25_recovery_policy_and_app_endpoints` |
-| **Preconditions** | FastAPI application mounted with all UI dashboard and recovery policy routes. |
-| **Test Steps** | 1. Test policy boundary conditions (severe drift vs warning). 2. Query dashboard routes (`/api/v1/dashboard/overview`, `/api/v1/audit/logs`). |
-| **Expected Result** | All routes return valid HTTP 200 JSON payloads; policy boundary conditions evaluated correctly. |
-| **Execution Status** | **PASSED** ✅ (Execution time: 185 ms) |
-| **Actual Result / Evidence** | Policy boundary overrides verified; dashboard endpoints return structured data for real-time visualization. |
-
----
-
 ## 4. Comprehensive Requirements Traceability Matrix
 
 | SRS Requirement | Description | Mapped Test Cases | Verification Level | Status |
 | :---: | :--- | :---: | :---: | :---: |
-| **FR-01** | Microservice Health & Uptime Status | TC-01, TC-21 | Integration / Resiliency | **PASSED** ✅ |
-| **FR-02** | Real-Time Telemetry & Prometheus Metric Collection | TC-02, TC-24 | Integration / Observability | **PASSED** ✅ |
-| **FR-03** | Two-Sample Statistical Drift Detection (KS & PSI) | TC-03, TC-04, TC-19 | Statistical / Unit | **PASSED** ✅ |
-| **FR-04** | Operation in Absence of Prompt Ground-Truth Labels | TC-06, TC-19 | Functional / Unsupervised | **PASSED** ✅ |
+| **FR-01** | Microservice Health & Uptime Status | TC-01 | Integration / Resiliency | **PASSED** ✅ |
+| **FR-02** | Real-Time Telemetry & Prometheus Metric Collection | TC-02 | Integration / Observability | **PASSED** ✅ |
+| **FR-03** | Two-Sample Statistical Drift Detection (KS & PSI) | TC-03, TC-04 | Statistical / Unit | **PASSED** ✅ |
+| **FR-04** | Operation in Absence of Prompt Ground-Truth Labels | TC-06 | Functional / Unsupervised | **PASSED** ✅ |
 | **FR-05** | Classical ML Baseline Experiment Tracking | TC-05, TC-16 | ML Integration | **PASSED** ✅ |
-| **FR-06** | Deep Learning Autoencoder Anomaly Detection | TC-05, TC-20 | Deep Learning / Anomaly | **PASSED** ✅ |
+| **FR-06** | Deep Learning Autoencoder Anomaly Detection | TC-05 | Deep Learning / Anomaly | **PASSED** ✅ |
 | **FR-07** | Quantum ML (QML) Circuit Simulation Benchmark | TC-05 | Quantum Simulator | **PASSED** ✅ |
-| **FR-08** | Drift Alert Propagation & Recovery Trigger | TC-04, TC-23 | Integration / Orchestrator | **PASSED** ✅ |
-| **FR-09** | Automated Validation Gatekeeper Evaluation | TC-07, TC-18, TC-23 | Safety Gate / Logic | **PASSED** ✅ |
+| **FR-08** | Drift Alert Propagation & Recovery Trigger | TC-04, TC-07 | Integration / Orchestrator | **PASSED** ✅ |
+| **FR-09** | Automated Validation Gatekeeper Evaluation | TC-07, TC-18 | Safety Gate / Logic | **PASSED** ✅ |
 | **FR-10** | Dual-Key Candidate Model Promotion Control | TC-07, TC-11, TC-18 | Security / Negative Gate | **PASSED** ✅ |
-| **FR-11** | Immutable Cryptographic Audit Ledger Logging | TC-12, TC-22 | Security / Cryptographic | **PASSED** ✅ |
-| **FR-12** | Automated Fallback & Emergency Model Rollback | TC-08, TC-21, TC-23 | Resiliency / System | **PASSED** ✅ |
-| **FR-13** | Web UI Dashboard Real-Time Telemetry Route | TC-25 | Integration / UI Route | **PASSED** ✅ |
+| **FR-11** | Immutable Cryptographic Audit Ledger Logging | TC-12 | Security / Cryptographic | **PASSED** ✅ |
+| **FR-12** | Automated Fallback & Emergency Model Rollback | TC-08, TC-10 | Resiliency / System | **PASSED** ✅ |
+| **FR-13** | Web UI Dashboard Real-Time Telemetry Route | TC-01, TC-02 | Integration / UI Route | **PASSED** ✅ |
 | **FR-14** | Role-Based Access Control on Administrative Surfaces | TC-11, TC-17 | Security / Authorization | **PASSED** ✅ |
 | **NFR-01**| Inference Latency SLA (p95 < 200 ms) | TC-09 (18.4 ms) | Performance Benchmark | **PASSED** ✅ |
-| **NFR-02**| Monitoring Worker Crash Isolation & Resiliency | TC-10, TC-21 | Fault Injection | **PASSED** ✅ |
-| **NFR-03**| Drift Detection Sensitivity & Scalability | TC-19 | Statistical Benchmark | **PASSED** ✅ |
+| **NFR-02**| Monitoring Worker Crash Isolation & Resiliency | TC-10 | Fault Injection | **PASSED** ✅ |
+| **NFR-03**| Drift Detection Sensitivity & Scalability | TC-03, TC-04 | Statistical Benchmark | **PASSED** ✅ |
 | **NFR-04**| Deterministic ML Experiment Reproducibility | TC-16 | ML Reproducibility | **PASSED** ✅ |
 | **NFR-05**| Microservice Containerization & Dockerfile Sanity | TC-15 | DevOps / Packaging | **PASSED** ✅ |
 | **NFR-06**| Automated CI/CD Workflow Execution | CI Workflow | GitHub Actions CI | **PASSED** ✅ |
-| **NFR-07**| Metrics Exporter Conformance & Prometheus Exposition | TC-02, TC-24 | Observability Standards | **PASSED** ✅ |
-| **NFR-08**| Dashboard Telemetry Latency & Freshness | TC-25 | Web Acceptance | **PASSED** ✅ |
+| **NFR-07**| Metrics Exporter Conformance & Prometheus Exposition | TC-02 | Observability Standards | **PASSED** ✅ |
+| **NFR-08**| Dashboard Telemetry Latency & Freshness | TC-01, TC-09 | Web Acceptance | **PASSED** ✅ |
 | **NFR-09**| API Scalability & Rapid Sequential Throughput | TC-09 | Performance | **PASSED** ✅ |
-| **NFR-10**| Zero Production Downtime During Model Swaps | TC-08, TC-23 | State Machine Integration | **PASSED** ✅ |
+| **NFR-10**| Zero Production Downtime During Model Swaps | TC-08, TC-18 | State Machine Integration | **PASSED** ✅ |
 | **NFR-11**| Redaction of Secrets and Zero Credential Leakage | TC-14 | Security Hygiene | **PASSED** ✅ |
-| **SR-01~06**| Defensive Security, RBAC, Payload Guards & Hash Chains | TC-11~14, 17, 22 | Comprehensive Security | **PASSED** ✅ |
+| **SR-01~06**| Defensive Security, RBAC, Payload Guards & Hash Chains | TC-11~14, 17 | Comprehensive Security | **PASSED** ✅ |
 
 ---
 
@@ -456,13 +358,6 @@ All test cases are implemented as automated Pytest scripts located in the `tests
 | **TC-16** | 2026-11-06 | `HEAD` | AMIT PRASAD S G | **PASSED** ✅ | `tests/test_tc05_tc16_experiments.py` |
 | **TC-17** | 2026-11-06 | `HEAD` | AMIT PRASAD S G | **PASSED** ✅ | `tests/test_tc11_tc12_security_audit.py` |
 | **TC-18** | 2026-11-06 | `HEAD` | Anantha Krishna M A | **PASSED** ✅ | `tests/test_tc07_tc08_tc18_recovery_gates.py` |
-| **TC-19** | 2026-11-06 | `HEAD` | AKASH G K | **PASSED** ✅ | `tests/test_tc19_drift_sensitivity_benchmark.py` |
-| **TC-20** | 2026-11-06 | `HEAD` | AMIT PRASAD S G | **PASSED** ✅ | `tests/test_tc20_dl_latent_attribution.py` |
-| **TC-21** | 2026-11-06 | `HEAD` | AKASH G K | **PASSED** ✅ | `tests/test_tc21_health_tripwire.py` |
-| **TC-22** | 2026-11-06 | `HEAD` | AMIT PRASAD S G | **PASSED** ✅ | `tests/test_tc22_audit_chain_verification.py` |
-| **TC-23** | 2026-11-06 | `HEAD` | Anantha Krishna M A | **PASSED** ✅ | `tests/test_tc23_e2e_recovery_workflow.py` |
-| **TC-24** | 2026-11-06 | `HEAD` | Anantha Krishna M A | **PASSED** ✅ | `tests/test_tc24_prometheus_live_export.py` |
-| **TC-25** | 2026-11-06 | `HEAD` | Anantha Krishna M A | **PASSED** ✅ | `tests/test_tc25_recovery_policy_coverage.py` |
 
 ---
 
@@ -470,4 +365,4 @@ All test cases are implemented as automated Pytest scripts located in the `tests
 
 The assignment brief for Software Engineering Mini-Project Deliverables Part-3 requires updating the previously written test cases based on sprint additions and maintaining a comprehensive Test Case Document. 
 
-This catalogue provides 25 fully specified, executed, and verified test cases covering all 14 Functional Requirements, 12 Non-Functional Requirements, and 6 Security Requirements with **100% test success rate** and **86% code coverage**.
+This catalogue provides 18 fully specified, executed, and verified test cases covering all 14 Functional Requirements, 11 Non-Functional Requirements, and 6 Security Requirements with **100% test success rate** and **83.1% statement coverage**.
