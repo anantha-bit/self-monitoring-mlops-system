@@ -169,34 +169,34 @@ In strict accordance with the **SE Mini-Project Deliverables Part-3** instructio
 
 ```mermaid
 flowchart TD
-    Client["Client Application / Traffic Generator"] -->|1. POST /api/v1/predict| API["FastAPI Prediction Microservice (FR-01, FR-02)"]
-    API -->|2. Ingest Stream| Collector["Monitoring Collector (Prometheus Metrics)"]
+    Client["Client Application / Traffic Generator"] -->|"1. POST /api/v1/predict"| API["FastAPI Prediction Microservice (FR-01, FR-02)"]
+    API -->|"2. Ingest Stream"| Collector["Monitoring Collector (Prometheus Metrics)"]
     
-    subgraph Monitoring & Anomaly Detection
-        Collector -->|3. Sliding Windows| DriftEngine["Statistical Drift Analyzer\n(Two-Sample KS-Test & PSI) (FR-03, FR-04)"]
-        Collector -->|Feature Sequence| DLAutoencoder["PyTorch Sequence Autoencoder\n(Reconstruction Error) (FR-06)"]
-        QML["Qiskit 4-Qubit Quantum Simulator\n(Variational Benchmark) (FR-07)"] -.->|Isolated Benchmark| Registry["Model Registry Adapter"]
+    subgraph Monitoring_Anomaly_Detection ["Monitoring & Anomaly Detection"]
+        Collector -->|"3. Sliding Windows"| DriftEngine["Statistical Drift Analyzer<br/>(Two-Sample KS-Test & PSI) (FR-03, FR-04)"]
+        Collector -->|"Feature Sequence"| DLAutoencoder["PyTorch Sequence Autoencoder<br/>(Reconstruction Error) (FR-06)"]
+        QML["Qiskit 4-Qubit Quantum Simulator<br/>(Variational Benchmark) (FR-07)"] -.->|"Isolated Benchmark"| Registry["Model Registry Adapter"]
     end
     
-    subgraph Autonomous Self-Healing & Safety Gates
-        DriftEngine -->|4. Drift Detected (PSI >= 0.25)| AlertMgr["Alert Manager (FR-08)"]
-        AlertMgr -->|5. Trigger Retraining| PolicyEngine["Recovery Policy Engine (FR-08, FR-09)"]
-        PolicyEngine -->|6. Retrain on Fresh Data| Retrainer["Automated Model Retrainer"]
-        Retrainer -->|7. Candidate Model| Gatekeeper["Validation Gatekeeper (FR-09, FR-10)"]
-        Gatekeeper -->|8a. Pass Acc >= 0.85 & Latency| DualKey["Dual-Key Promotion Lock (FR-10, FR-14)"]
-        DualKey -->|9. Authorized Promotion| Registry
-        Gatekeeper -->|8b. Fail Validation Gate| Rollback["Emergency Rollback Trigger (FR-12)"]
-        Rollback -->|Revert Active Pointer| Registry
+    subgraph Autonomous_Self_Healing ["Autonomous Self-Healing & Safety Gates"]
+        DriftEngine -->|"4. Drift Detected (PSI >= 0.25)"| AlertMgr["Alert Manager (FR-08)"]
+        AlertMgr -->|"5. Trigger Retraining"| PolicyEngine["Recovery Policy Engine (FR-08, FR-09)"]
+        PolicyEngine -->|"6. Retrain on Fresh Data"| Retrainer["Automated Model Retrainer"]
+        Retrainer -->|"7. Candidate Model"| Gatekeeper["Validation Gatekeeper (FR-09, FR-10)"]
+        Gatekeeper -->|"8a. Pass (Accuracy >= 0.85 & Latency SLA)"| DualKey["Dual-Key Promotion Lock (FR-10, FR-14)"]
+        DualKey -->|"9. Authorized Promotion"| Registry
+        Gatekeeper -->|"8b. Fail Validation Gate"| Rollback["Emergency Rollback Trigger (FR-12)"]
+        Rollback -->|"Revert Active Pointer"| Registry
     end
     
-    subgraph Security & Audit Ledger
-        API -.->|Request Auth| RBAC["RBAC / API Key Filter (FR-14)"]
-        PolicyEngine -.->|Audit Record| AuditLedger["SHA-256 Chained Audit Ledger (FR-11)"]
-        Gatekeeper -.->|Promotion Audit| AuditLedger
-        Rollback -.->|Rollback Audit| AuditLedger
+    subgraph Security_Audit_Ledger ["Security & Audit Ledger"]
+        API -.->|"Request Auth"| RBAC["RBAC / API Key Filter (FR-14)"]
+        PolicyEngine -.->|"Audit Record"| AuditLedger["SHA-256 Chained Audit Ledger (FR-11)"]
+        Gatekeeper -.->|"Promotion Audit"| AuditLedger
+        Rollback -.->|"Rollback Audit"| AuditLedger
     end
     
-    Registry -->|Serve Active Model Weights| API
+    Registry -->|"Serve Active Model Weights"| API
 ```
 
 ### Core Subsystems & Components
