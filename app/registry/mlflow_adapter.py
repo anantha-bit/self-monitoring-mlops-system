@@ -20,6 +20,7 @@ class ModelRegistryAdapter:
             "latency_p95_ms": 42.5
         }
         self.candidates: Dict[str, Dict[str, Any]] = {}
+        self.rollback_history: List[Dict[str, Any]] = []
 
     def register_candidate(
         self,
@@ -159,6 +160,15 @@ class ModelRegistryAdapter:
                 "reason": reason
             }
         )
+        rb_event = {
+            "timestamp": time.time(),
+            "actor": actor,
+            "rolled_back_from": previous_active,
+            "restored_version": target_version,
+            "reason": reason
+        }
+        self.rollback_history.append(rb_event)
+
         return {
             "status": "ROLLED_BACK",
             "active_version": self.active_version,
@@ -169,5 +179,59 @@ class ModelRegistryAdapter:
 
     def list_candidates(self) -> List[Dict[str, Any]]:
         return list(self.candidates.values())
+
+    def get_registry_overview(self) -> Dict[str, Any]:
+        """Group all registered and tracked models by lifecycle state."""
+        production_model = {
+            "model_name": "RandomForest_Production",
+            "model_version": self.active_version,
+            "model_type": "Classical_RandomForest",
+            "lifecycle_state": "PRODUCTION",
+            "metrics": self.stable_metrics,
+            "is_active": True,
+            "description": "Active certified production inference model."
+        }
+
+        candidates = [c for c in self.candidates.values() if c.get("lifecycle_state") in ["REGISTERED", "VALIDATED", "VALIDATION_FAILED", "PROMOTION_BLOCKED"]]
+        archived = [
+            {
+                "model_name": "Baseline_RF_Certified_Stable",
+                "model_version": self.last_stable_version,
+                "model_type": "Classical_RandomForest",
+                "lifecycle_state": "STABLE_BASELINE",
+                "metrics": {
+                    "accuracy": 0.9231,
+                    "precision": 0.9125,
+                    "recall": 0.9412,
+                    "f1_score": 0.9266,
+                    "latency_p95_ms": 42.5
+                },
+                "is_active": (self.active_version == self.last_stable_version),
+                "description": "Certified stable baseline model for emergency rollback and regression benchmarking."
+            }
+        ]
+        
+        # Add any previously promoted candidates that are no longer active
+        for c in self.candidates.values():
+            if c.get("lifecycle_state") == "PROMOTED" and c.get("candidate_id") != self.active_version:
+                archived.append({
+                    "model_name": f"Candidate_{c['candidate_id']}",
+                    "model_version": c["candidate_id"],
+                    "model_type": c["model_type"],
+                    "lifecycle_state": "ARCHIVED",
+                    "metrics": c["metrics"],
+                    "is_active": False,
+                    "description": "Previously promoted candidate model, now archived."
+                })
+
+        return {
+            "active_version": self.active_version,
+            "last_stable_version": self.last_stable_version,
+            "production_model": production_model,
+            "candidates": candidates,
+            "archived_models": archived,
+            "rollback_history": self.rollback_history,
+            "total_registered_models": 1 + len(self.candidates)
+        }
 
 model_registry = ModelRegistryAdapter()

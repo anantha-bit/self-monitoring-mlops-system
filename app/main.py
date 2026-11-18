@@ -9,17 +9,19 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.config import settings
 from app.api.routes import router as api_router
 from app.models.ml_monitor import ml_monitor
+from app.models.dl_monitor import dl_monitor
 from app.monitoring.drift import drift_analyzer
 from app.security.audit import audit_logger
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """
-    Lifespan context manager: initialize baseline model & reference data on startup.
+    Lifespan context manager: initialize baseline model, reference data, and autoencoder on startup.
     """
     try:
         baseline_meta = ml_monitor.train_baseline()
         drift_analyzer.set_reference_data(ml_monitor.reference_data)
+        dl_monitor.ensure_model_ready()
         audit_logger.record_event(
             actor="SYSTEM_INIT",
             action="SERVICE_STARTUP",

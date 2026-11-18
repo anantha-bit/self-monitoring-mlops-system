@@ -12,16 +12,28 @@ from app.monitoring.collector import collector
 from app.monitoring.drift import drift_analyzer
 from app.models.ml_monitor import ml_monitor
 from app.models.dl_monitor import dl_monitor
+from app.models.dl_visualizer import latent_analyzer
 from app.models.qml_benchmark import qml_benchmark
+from app.monitoring.benchmark import drift_benchmark
 from app.recovery.validator import validator as candidate_validator
 from app.recovery.policy import recovery_policy
+from app.recovery.health_checker import health_tripwire
 from app.registry.mlflow_adapter import model_registry
+from app.security.verifier import audit_verifier
 
 router = APIRouter()
 
 # -----------------
 # Request Models
 # -----------------
+class DLScoreRequest(BaseModel):
+    features: List[float] = Field(..., min_length=1, max_length=50)
+
+class QMLSimulateRequest(BaseModel):
+    sample_size: int = Field(100, ge=10, le=1000)
+    circuit_depth: int = Field(2, ge=1, le=5)
+    parameter_shift: Optional[float] = Field(0.0)
+
 class PredictionTelemetryRequest(BaseModel):
     request_id: str = Field(..., max_length=64, description="Unique request correlation ID")
     model_version: str = Field(..., max_length=32)
@@ -327,3 +339,150 @@ def query_audit_logs(
         limit=limit
     )
     return {"count": len(events), "audit_events": events}
+
+@router.get("/api/v1/models/ml/info", tags=["Machine Learning"])
+def get_ml_model_info(user: User = Depends(require_roles([Role.ADMIN, Role.ML_ENGINEER, Role.VIEWER, Role.SERVICE]))):
+    """
+    Retrieve Classical Random Forest model metadata, actual feature importances, and dataset descriptors.
+    """
+    return ml_monitor.get_model_info()
+
+@router.get("/api/v1/models/dl/info", tags=["Deep Learning"])
+def get_dl_model_info(user: User = Depends(require_roles([Role.ADMIN, Role.ML_ENGINEER, Role.VIEWER, Role.SERVICE]))):
+    """
+    Retrieve PyTorch Sequence Autoencoder architecture details, threshold, and latent parameters.
+    """
+    dl_monitor.ensure_model_ready()
+    return {
+        "model_type": "DeepLearning_Autoencoder",
+        "model_version": dl_monitor.version,
+        "architecture": "PyTorch MLP-Autoencoder [Linear(6, 3) -> ReLU -> Linear(3, 2) -> ReLU -> Linear(2, 3) -> ReLU -> Linear(3, 6)]",
+        "input_dimensions": dl_monitor.input_dim,
+        "compressed_latent_dimensions": 2,
+        "anomaly_threshold": round(dl_monitor.anomaly_threshold, 4),
+        "loss_function": "Mean Squared Error (MSE)",
+        "optimization": "Adam Optimizer (lr=0.01)"
+    }
+
+@router.post("/api/v1/models/dl/score", tags=["Deep Learning"])
+def score_dl_sample(
+    request: DLScoreRequest,
+    user: User = Depends(require_roles([Role.ADMIN, Role.ML_ENGINEER, Role.VIEWER, Role.SERVICE]))
+):
+    """
+    Execute actual PyTorch Autoencoder forward pass on input sample vector.
+    Returns 2D latent representation, reconstructed vector, per-feature errors, and anomaly status.
+    """
+    features_arr = np.array(request.features, dtype=float)
+    if len(features_arr) < 6:
+        features_arr = np.pad(features_arr, (0, 6 - len(features_arr)), 'constant')
+    elif len(features_arr) > 6:
+        features_arr = features_arr[:6]
+
+    result = dl_monitor.score_sample(features_arr)
+    # Map feature names
+    feat_names = ml_monitor.feature_names if ml_monitor.feature_names else [f"feat_{i}" for i in range(6)]
+    result["feature_names"] = feat_names
+    result["original"] = [round(float(v), 4) for v in features_arr]
+    result["per_feature_error_map"] = {
+        feat_names[i]: result["feature_errors"][i] for i in range(min(len(feat_names), len(result["feature_errors"])))
+    }
+    return result
+
+@router.post("/api/v1/models/qml/simulate", tags=["Quantum ML"])
+def simulate_qml_benchmark(
+    request: QMLSimulateRequest,
+    user: User = Depends(require_roles([Role.ADMIN, Role.ML_ENGINEER, Role.VIEWER, Role.SERVICE]))
+):
+    """
+    Execute 4-qubit Variational Quantum Circuit simulation with statevector probabilities.
+    Strictly isolated experimental benchmark according to FR-07.
+    """
+    return qml_benchmark.simulate_statevector(
+        sample_size=request.sample_size,
+        depth=request.circuit_depth,
+        parameter_shift=request.parameter_shift or 0.0
+    )
+
+@router.get("/api/v1/drift/reference", tags=["Drift Analysis"])
+def get_drift_reference_distribution(user: User = Depends(require_roles([Role.ADMIN, Role.ML_ENGINEER, Role.VIEWER, Role.SERVICE]))):
+    """
+    Retrieve baseline reference distributions, statistics, and histogram data for all 6 features.
+    """
+    if not drift_analyzer.reference_data:
+        ml_monitor.train_baseline()
+        drift_analyzer.set_reference_data(ml_monitor.reference_data)
+
+    feature_distributions = {}
+    for feat_name, arr in drift_analyzer.reference_data.items():
+        counts, bin_edges = np.histogram(arr, bins=10)
+        feature_distributions[feat_name] = {
+            "mean": round(float(np.mean(arr)), 4),
+            "std": round(float(np.std(arr)), 4),
+            "min": round(float(np.min(arr)), 4),
+            "max": round(float(np.max(arr)), 4),
+            "bins": [round(float(b), 2) for b in bin_edges],
+            "counts": [int(c) for c in counts],
+            "sample_values": [round(float(v), 2) for v in arr[:30]]
+        }
+    return {
+        "status": "INITIALIZED",
+        "features": feature_distributions,
+        "sample_count": len(next(iter(drift_analyzer.reference_data.values()))) if drift_analyzer.reference_data else 0
+    }
+
+@router.get("/api/v1/drift/benchmark", tags=["Drift Analysis"])
+def run_drift_sensitivity_benchmark(user: User = Depends(require_roles([Role.ADMIN, Role.ML_ENGINEER, Role.VIEWER, Role.SERVICE]))):
+    """
+    Run empirical sensitivity and robustness benchmark across shift magnitudes for KS and PSI estimators.
+    """
+    results = drift_benchmark.evaluate_sensitivity([0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0])
+    return {
+        "benchmark_suite": "Two-Sample KS and PSI Sensitivity Suite",
+        "sample_size": drift_benchmark.sample_size,
+        "results": results
+    }
+
+@router.get("/api/v1/registry/overview", tags=["Model Registry"])
+def get_registry_overview(user: User = Depends(require_roles([Role.ADMIN, Role.ML_ENGINEER, Role.VIEWER, Role.SERVICE]))):
+    """
+    Get full lifecycle view of model registry: production, candidates, archived, and rollback history.
+    """
+    return model_registry.get_registry_overview()
+
+@router.get("/api/v1/audit/verify", tags=["Security & Audit"])
+def verify_audit_chain(user: User = Depends(require_roles([Role.ADMIN, Role.ML_ENGINEER, Role.VIEWER]))):
+    """
+    Cryptographically verify the SHA-256 hash chain of the tamper-resistant audit ledger.
+    """
+    is_valid, msg = audit_verifier.verify_chain(audit_logger._memory_cache)
+    return {
+        "verified": is_valid,
+        "message": msg,
+        "total_records": len(audit_logger._memory_cache),
+        "latest_integrity_hash": audit_logger._last_hash
+    }
+
+@router.get("/api/v1/system/telemetry", tags=["Monitoring"])
+def get_system_telemetry(user: User = Depends(require_roles([Role.ADMIN, Role.ML_ENGINEER, Role.VIEWER, Role.SERVICE]))):
+    """
+    Get live system telemetry stream, latencies, collector queue, and tripwire health.
+    """
+    summary = collector.get_summary(active_model_version=model_registry.active_version)
+    tripwire_healthy, tripwire_status = health_tripwire.check_telemetry(
+        summary["error_rate"],
+        summary["latency_p95_ms"]
+    )
+    return {
+        "summary": summary,
+        "recent_events": collector.recent_events[-20:] if collector.recent_events else [],
+        "latencies_sample": collector.latencies[-30:] if collector.latencies else [],
+        "tripwire": {
+            "healthy": tripwire_healthy,
+            "status": tripwire_status,
+            "consecutive_failures": health_tripwire.consecutive_failures
+        },
+        "drift_status": "DRIFT_DETECTED" if len(drift_analyzer.get_alerts(status_filter="OPEN")) > 0 else "NO_DRIFT",
+        "open_alerts": drift_analyzer.get_alerts(status_filter="OPEN"),
+        "timestamp": time.time()
+    }

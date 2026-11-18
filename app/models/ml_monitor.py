@@ -91,5 +91,60 @@ class ClassicalMLMonitor:
         probs = self.model.predict_proba(features)
         return preds, probs
 
+    def get_model_info(self) -> Dict[str, Any]:
+        """Return rich metadata, actual feature importances, and dataset descriptions."""
+        if self.model is None:
+            self.train_baseline()
+        importances = getattr(self.model, "feature_importances_", np.ones(len(self.feature_names)) / len(self.feature_names))
+        total_imp = float(np.sum(importances)) if np.sum(importances) > 0 else 1.0
+        
+        feature_importance_list = []
+        for i, name in enumerate(self.feature_names):
+            imp_val = float(importances[i])
+            pct_val = (imp_val / total_imp) * 100.0
+            feature_importance_list.append({
+                "feature": name,
+                "importance": round(imp_val, 4),
+                "percentage": round(pct_val, 2),
+                "rank": 0 # to be sorted
+            })
+        feature_importance_list.sort(key=lambda x: x["importance"], reverse=True)
+        for idx, item in enumerate(feature_importance_list):
+            item["rank"] = idx + 1
+
+        ref_stats = {}
+        for name, arr in self.reference_data.items():
+            ref_stats[name] = {
+                "mean": round(float(np.mean(arr)), 4),
+                "std": round(float(np.std(arr)), 4),
+                "min": round(float(np.min(arr)), 4),
+                "max": round(float(np.max(arr)), 4),
+                "p25": round(float(np.percentile(arr, 25)), 4),
+                "p50": round(float(np.percentile(arr, 50)), 4),
+                "p75": round(float(np.percentile(arr, 75)), 4),
+                "sample_count": len(arr)
+            }
+
+        return {
+            "model_type": "Classical_RandomForest",
+            "algorithm": "Scikit-Learn RandomForestClassifier",
+            "model_version": self.current_version,
+            "feature_names": self.feature_names,
+            "feature_importances": feature_importance_list,
+            "n_features": len(self.feature_names),
+            "hyperparameters": {
+                "n_estimators": getattr(self.model, "n_estimators", 50),
+                "max_depth": getattr(self.model, "max_depth", 5),
+                "random_state": self.random_seed
+            },
+            "dataset_info": {
+                "name": "Breast Cancer Wisconsin Diagnostic Benchmark",
+                "description": "Standard binary classification dataset tracking 6 core morphological cellular risk features.",
+                "target_classes": {"0": "Malignant", "1": "Benign"},
+                "num_reference_samples": len(next(iter(self.reference_data.values()))) if self.reference_data else 0
+            },
+            "reference_stats": ref_stats
+        }
+
 ml_monitor = ClassicalMLMonitor()
 

@@ -118,4 +118,57 @@ class DeepLearningMonitor:
                 "threshold": round(self.anomaly_threshold, 4)
             }
 
+    def ensure_model_ready(self):
+        """Ensure autoencoder model weights are loaded and ready for inference."""
+        if self.model is None:
+            artifact_path = os.path.join(settings.MODEL_REGISTRY_DIR, f"dl_autoencoder_{self.version}.pt")
+            if os.path.exists(artifact_path):
+                try:
+                    self.model = TemporalSequenceAutoencoder(input_dim=self.input_dim)
+                    self.model.load_state_dict(torch.load(artifact_path, map_location=torch.device('cpu')))
+                    self.model.eval()
+                    from app.models.ml_monitor import ml_monitor
+                    if not ml_monitor.reference_data:
+                        ml_monitor.train_baseline()
+                    train_matrix = np.column_stack(list(ml_monitor.reference_data.values()))
+                    with torch.no_grad():
+                        t_data = torch.tensor(train_matrix, dtype=torch.float32)
+                        rec = self.model(t_data)
+                        sample_errors = torch.mean((rec - t_data) ** 2, dim=1).numpy()
+                        self.anomaly_threshold = float(np.percentile(sample_errors, 95) * 1.5)
+                    return
+                except Exception:
+                    pass
+            from app.models.ml_monitor import ml_monitor
+            if not ml_monitor.reference_data:
+                ml_monitor.train_baseline()
+            train_matrix = np.column_stack(list(ml_monitor.reference_data.values()))
+            self.train_sequence_anomaly_model(train_matrix, epochs=20)
+
+    def score_sample(self, sample: np.ndarray) -> Dict[str, Any]:
+        """
+        Score a single sample vector: returns reconstructed vector, 2D latent coordinates,
+        per-feature reconstruction errors, MSE, and anomaly classification.
+        """
+        self.ensure_model_ready()
+        self.model.eval()
+        with torch.no_grad():
+            tensor = torch.tensor(sample.reshape(1, -1), dtype=torch.float32)
+            encoded = self.model.encoder(tensor)
+            reconstructed = self.model.decoder(encoded)
+            recon_np = reconstructed.squeeze().numpy()
+            sample_np = sample.flatten()
+            feature_errors = (recon_np - sample_np) ** 2
+            mse = float(np.mean(feature_errors))
+            is_anomaly = bool(mse > self.anomaly_threshold)
+            return {
+                "reconstructed": [round(float(v), 4) for v in recon_np],
+                "latent_2d": [round(float(v), 4) for v in encoded.squeeze().numpy()],
+                "feature_errors": [round(float(v), 4) for v in feature_errors],
+                "reconstruction_error": round(mse, 4),
+                "anomaly_threshold": round(self.anomaly_threshold, 4),
+                "is_anomaly": is_anomaly,
+                "anomaly_score": round(mse / (self.anomaly_threshold if self.anomaly_threshold > 0 else 1.0), 4)
+            }
+
 dl_monitor = DeepLearningMonitor()
